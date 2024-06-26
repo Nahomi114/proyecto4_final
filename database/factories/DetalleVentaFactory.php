@@ -3,21 +3,22 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\DetalleVenta;
+use App\Models\Venta;
+use App\Models\Producto;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
- */
 class DetalleVentaFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = DetalleVenta::class;
+
     public function definition(): array
     {
         return [
-            //
+            'ID_ventas' => Venta::factory(),
+            'ID_producto' => Producto::factory(),
+            'cantidad' => $this->faker->numberBetween(1, 100),
+            'precio' => $this->faker->randomFloat(2, 1, 100),
+            'descuento' => $this->faker->randomFloat(2, 0, 10),
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Ingreso;
 
 class IngresoSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class IngresoSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Ingreso::factory(10)->create();
     }
 }
+
