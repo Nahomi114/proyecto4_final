@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->id();
+            $table->id('ID_clientes');
+            $table->string('Nom_cliente');
+            $table->string('Ape_cliente');
+            $table->string('Tipo_documento');
+            $table->string('DNI_cliente')->unique();
+            $table->string('Cel_cliente');
+            $table->string('Correo_cliente')->unique();
             $table->timestamps();
         });
     }
@@ -25,3 +31,4 @@ return new class extends Migration
         Schema::dropIfExists('clientes');
     }
 };
+

@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categorias', function (Blueprint $table) {
-            $table->id();
+            $table->id('ID_categorias');
+            $table->string('Nom_categorias', 50);
+            $table->string('Desc_categorias', 100);
             $table->timestamps();
         });
     }
@@ -25,3 +27,4 @@ return new class extends Migration
         Schema::dropIfExists('categorias');
     }
 };
+
