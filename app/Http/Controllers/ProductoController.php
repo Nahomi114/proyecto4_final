@@ -3,63 +3,109 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use BadMethodCallException;
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function index() {
+        $productos = Producto::paginate(10);
+        return view('productos.index', compact('productos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function create() {
+        $categorias = Categoria::all();
+        return view('productos.create', compact('categorias'));
+    }
+    
+    public function store(Request $request) {
+        $request->validate([
+            'ID_categorias' => 'required|exists:categorias,ID_categorias',
+            'Cod_Barra_producto' => 'required|string|max:255',
+            'Nom_producto' => 'required|string|max:255',
+            'Precio_producto' => 'required|numeric',
+            'Cantida_producto' => 'required|integer',
+            'Img_producto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación para la imagen
+            'Stock_producto' => 'required|integer',
+            'Desc_producto' => 'required|string|max:255',
+            'Estado_producto' => 'required|string|max:50'
+        ]);
+
+        // Procesamiento de la imagen si se proporciona
+        if ($request->hasFile('Img_producto')) {
+            $image = $request->file('Img_producto');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images/productos'), $imageName); // Guardar la imagen en la carpeta public/images/productos
+
+            $imgPath = 'images/productos/' . $imageName; // Ruta de la imagen para guardar en la base de datos
+        } else {
+            $imgPath = null;
+        }
+
+        // Crear el producto en la base de datos
+        Producto::create(array_merge($request->all(), ['Img_producto' => $imgPath]));
+
+        return redirect()->route('productos.index')->with('success', 'Producto creado correctamente.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function edit(Producto $producto) {
+        $categorias = Categoria::all();
+        return view('productos.edit', compact('producto', 'categorias'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Producto $producto)
-    {
-        //
+    public function update(Request $request, Producto $producto) {
+        $request->validate([
+            'ID_categorias' => 'required|exists:categorias,ID_categorias',
+            'Cod_Barra_producto' => 'required|string|max:255',
+            'Nom_producto' => 'required|string|max:255',
+            'Precio_producto' => 'required|numeric',
+            'Cantida_producto' => 'required|integer',
+            'Img_producto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación para la imagen
+            'Stock_producto' => 'required|integer',
+            'Desc_producto' => 'required|string|max:255',
+            'Estado_producto' => 'required|string|max:50'
+        ]);
+
+        // Procesamiento de la imagen si se proporciona
+        if ($request->hasFile('Img_producto')) {
+            $image = $request->file('Img_producto');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images/productos'), $imageName); // Guardar la imagen en la carpeta public/images/productos
+
+            $imgPath = 'images/productos/' . $imageName; // Ruta de la imagen para guardar en la base de datos
+        } else {
+            $imgPath = $producto->Img_producto; // Mantener la imagen actual si no se proporciona una nueva
+        }
+
+        // Actualizar el producto en la base de datos
+        $producto->update(array_merge($request->all(), ['Img_producto' => $imgPath]));
+
+        return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Producto $producto)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Producto $producto)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Producto $producto)
     {
-        //
+        try {
+            // Verificar si el producto tiene detalles de ingreso asociados
+            if ($producto->detallesIngreso()->exists()) {
+                return redirect()->route('productos.index')->with('error', 'No se puede eliminar el producto porque tiene detalles de ingreso asociados.');
+            }
+
+            // Si no tiene detalles de ingreso asociados, proceder a eliminar el producto
+            $producto->delete();
+
+            return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
+
+        } catch (BadMethodCallException $e) {
+            return redirect()->route('productos.index')->with('error', 'No se puede eliminar el producto en este momento.');
+
+        } catch (QueryException $e) {
+            // Manejar excepciones específicas si es necesario
+            return redirect()->route('productos.index')->with('error', 'Ocurrió un error al intentar eliminar el producto.');
+        }
     }
 }
