@@ -2,7 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\DetalleIngresoController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\IngresoController;
+use App\Http\Controllers\VentaController;
+use App\Http\Controllers\DetalleVentaController;
+use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -24,5 +32,5 @@ Route::resource('proveedores', ProveedorController::class);
 Route::resource('ingresos', IngresoController::class);
 Route::resource('ventas', VentaController::class);
 Route::resource('detalle_ventas', DetalleVentaController::class);
-Route::resource('users', USerController::class);
+Route::resource('users', UserController::class);
 require __DIR__.'/auth.php';
