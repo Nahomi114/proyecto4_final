@@ -1,5 +1,3 @@
-<!-- resources/views/categorias/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -26,23 +24,21 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach ($categorias as $categoria)
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $categoria->id }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $categoria->Nom_categorias }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $categoria->Desc_categorias }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="{{ route('categorias.edit', $categoria) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
-            
-                            <form action="{{ route('categorias.destroy', $categoria) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('¿Está seguro de eliminar esta categoría?')">Eliminar</button>
-                    </form>
-                </td>
-                </tr>
-                    @endforeach
-
+                        @foreach ($categorias as $categoria)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $categoria->ID_categorias }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $categoria->Nom_categorias }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $categoria->Desc_categorias }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{{ route('categorias.edit', $categoria->ID_categorias) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
+                                    <form action="{{ route('categorias.destroy', $categoria->ID_categorias) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('¿Está seguro de eliminar esta categoría?')">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
 
@@ -54,7 +50,4 @@
         </div>
     </div>
 @endsection
-
-
-
 

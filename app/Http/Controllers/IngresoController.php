@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Proveedor; 
+use App\Models\User;
 use App\Models\Ingreso;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\Producto;
+
 use BadMethodCallException;
 
 class IngresoController extends Controller
@@ -16,9 +19,22 @@ class IngresoController extends Controller
         return view('ingresos.index', compact('ingresos'));
     }
 
-    public function create() {
-        return view('ingresos.create');
+    public function create()
+    {
+        $ingresos = Ingreso::all();
+        $proveedores = Proveedor::all(['ID_proveedores', 'Nom_proveedores']);
+        $users = User::all(['id', 'name']); 
+
+        return view('ingresos.create', compact('proveedores', 'users','ingresos'));
     }
+    public function show($id)
+    {
+        $ingreso = Ingreso::findOrFail($id);
+        $productos = Producto::all(); // O puedes ajustar según tus necesidades
+
+        return view('ingresos.show', compact('ingreso', 'productos'));
+    }
+
     
     public function store(Request $request) {
         $request->validate([

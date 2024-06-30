@@ -23,7 +23,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="Tipo_documento">Tipo Documento</label>
-                                <input type="text" class="form-control" id="Tipo_documento" name="Tipo_documento" value="{{ $cliente->Tipo_documento }}" required>
+                                <select class="form-control" id="Tipo_documento" name="Tipo_documento" required>
+                                    <option value="">Seleccionar tipo de documento</option>
+                                    <option value="DNI" @if($cliente->Tipo_documento == 'DNI') selected @endif>DNI</option>
+                                    <option value="RUC" @if($cliente->Tipo_documento == 'RUC') selected @endif>RUC</option>
+                                    <option value="Pasaporte" @if($cliente->Tipo_documento == 'Pasaporte') selected @endif>Pasaporte</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="DNI_cliente">DNI</label>

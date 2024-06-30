@@ -14,7 +14,7 @@ class ClienteFactory extends Factory
         return [
             'Nom_cliente' => $this->faker->firstName,
             'Ape_cliente' => $this->faker->lastName,
-            'Tipo_documento' => $this->faker->randomElement(['DNI', 'RUC']),
+            'Tipo_documento' => $this->faker->randomElement(['DNI', 'RUC', 'Pasaporte']),
             'DNI_cliente' => $this->faker->unique()->numerify('###########'),
             'Cel_cliente' => $this->faker->numerify('9########'),
             'Correo_cliente' => $this->faker->unique()->safeEmail,

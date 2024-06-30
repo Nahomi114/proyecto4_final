@@ -1,5 +1,3 @@
-<!-- resources/views/clientes/create.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -28,21 +26,26 @@
                             </div>
                             <div class="form-group">
                                 <label for="Tipo_documento">Tipo Documento</label>
-                                <input type="text" class="form-control @error('Tipo_documento') is-invalid @enderror" id="Tipo_documento" name="Tipo_documento" value="{{ old('Tipo_documento') }}" required>
+                                <select class="form-control @error('Tipo_documento') is-invalid @enderror" id="Tipo_documento" name="Tipo_documento" required>
+                                    <option value="">Seleccionar tipo de documento</option>
+                                    <option value="DNI" @if(old('Tipo_documento') == 'DNI') selected @endif>DNI</option>
+                                    <option value="RUC" @if(old('Tipo_documento') == 'RUC') selected @endif>RUC</option>
+                                    <option value="Pasaporte" @if(old('Tipo_documento') == 'Pasaporte') selected @endif>Pasaporte</option>
+                                </select>
                                 @error('Tipo_documento')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="DNI_cliente">DNI</label>
-                                <input type="text" class="form-control @error('DNI_cliente') is-invalid @enderror" id="DNI_cliente" name="DNI_cliente" value="{{ old('DNI_cliente') }}" required>
+                                <label for="DNI_cliente">Número de Documento </label>
+                                <input type="text" class="form-control @error('DNI_cliente') is-invalid @enderror" id="DNI_cliente" name="DNI_cliente" value="{{ old('DNI_cliente') }}" pattern="\d*" required>
                                 @error('DNI_cliente')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="Cel_cliente">Celular</label>
-                                <input type="text" class="form-control @error('Cel_cliente') is-invalid @enderror" id="Cel_cliente" name="Cel_cliente" value="{{ old('Cel_cliente') }}" required>
+                                <input type="text" class="form-control @error('Cel_cliente') is-invalid @enderror" id="Cel_cliente" name="Cel_cliente" value="{{ old('Cel_cliente') }}" pattern="\d*" maxlength="9" required>
                                 @error('Cel_cliente')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -63,4 +66,5 @@
         </div>
     </div>
 @endsection
+
 

@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Producto;
+use App\Models\User;
 
+use App\Models\Proveedor;
 use App\Models\DetalleIngreso;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -13,14 +16,20 @@ class DetalleIngresoController extends Controller
 {
     public function index()
     {
-        $detallesIngreso = DetalleIngreso::paginate(10);
-        return view('detalle_ingreso.index', compact('detallesIngreso'));
+        $detalleIngresos = DetalleIngreso::with(['ingreso', 'producto'])->paginate(10);
+
+        return view('detalle_ingreso.index', compact('detalleIngresos'));
     }
 
     public function create()
-    {
-        return view('detalle_ingreso.create');
-    }
+{
+    $proveedores = Proveedor::all(['ID_proveedores', 'Nom_proveedores']);
+    $users = User::all(['id', 'name']);
+    $productos = Producto::all(['ID_producto', 'Nom_producto']);
+
+    return view('detalle_ingreso.create', compact('proveedores', 'users', 'productos'));
+}
+
 
     public function store(Request $request)
     {

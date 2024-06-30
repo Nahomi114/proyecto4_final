@@ -1,5 +1,3 @@
-<!-- resources/views/detalle_ingreso/create.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -19,12 +17,16 @@
         <form action="{{ route('detalle_ingreso.store') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="ID_producto">Producto</label>
-                <input type="number" name="ID_producto" class="form-control" value="{{ old('ID_producto') }}">
-            </div>
-            <div class="form-group">
                 <label for="ID_ingreso">ID de Ingreso</label>
                 <input type="number" name="ID_ingreso" class="form-control" value="{{ old('ID_ingreso') }}">
+            </div>
+            <div class="form-group">
+                <label for="ID_producto">Producto</label>
+                <select name="ID_producto" class="form-control">
+                    @foreach ($productos as $producto)
+                        <option value="{{ $producto->ID_producto }}">{{ $producto->Nom_producto }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="cant_det_ingreso">Cantidad</label>

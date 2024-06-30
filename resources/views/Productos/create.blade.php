@@ -20,7 +20,12 @@
         @csrf
         <div class="form-group">
             <label for="ID_categorias">Categoría</label>
-            <input type="number" name="ID_categorias" class="form-control" value="{{ old('ID_categorias') }}">
+            <select name="ID_categorias" class="form-control">
+                <option value="">Selecciona una categoría</option>
+                @foreach($categorias as $categoria)
+                    <option value="{{ $categoria->ID_categorias }}">{{ $categoria->Nom_categorias }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
             <label for="Cod_Barra_producto">Código de Barras</label>

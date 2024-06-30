@@ -1,4 +1,5 @@
 <!-- resources/views/productos/edit.blade.php -->
+<!-- resources/views/productos/edit.blade.php -->
 
 @extends('layouts.app')
 
@@ -16,12 +17,17 @@
         </div>
     @endif
 
-    <form action="{{ route('productos.update', ['producto' => $producto->ID_producto]) }}" method="POST">
+    <form action="{{ route('productos.update', ['producto' => $producto->ID_producto]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group">
             <label for="ID_categorias">Categoría</label>
-            <input type="number" name="ID_categorias" class="form-control" value="{{ old('ID_categorias', $producto->ID_categorias) }}">
+            <select name="ID_categorias" class="form-control">
+                <option value="">Selecciona una categoría</option>
+                @foreach($categorias as $categoria)
+                    <option value="{{ $categoria->ID_categorias }}" {{ $producto->ID_categorias == $categoria->ID_categorias ? 'selected' : '' }}>{{ $categoria->Nom_categorias }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
             <label for="Cod_Barra_producto">Código de Barras</label>
@@ -41,7 +47,12 @@
         </div>
         <div class="form-group">
             <label for="Img_producto">Imagen</label>
-            <input type="text" name="Img_producto" class="form-control" value="{{ old('Img_producto', $producto->Img_producto) }}">
+            <input type="file" name="Img_producto" class="form-control-file">
+            @if ($producto->Img_producto)
+                <img src="{{ asset($producto->Img_producto) }}" class="mt-2 mb-2" style="max-width: 200px;">
+            @else
+                <p>No hay imagen actualmente.</p>
+            @endif
         </div>
         <div class="form-group">
             <label for="Stock_producto">Stock</label>
