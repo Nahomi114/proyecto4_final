@@ -12,7 +12,7 @@ class DetalleVenta extends Model
     protected $table = 'detalle_ventas';
     protected $primaryKey = 'ID_det_ventas';
     protected $fillable = [
-        'ID_productos',
+        'ID_producto', // Corregido de 'ID_productos'
         'ID_ventas',
         'cantidad',
         'precio',
@@ -21,7 +21,7 @@ class DetalleVenta extends Model
 
     public function producto()
     {
-        return $this->belongsTo(Producto::class, 'ID_productos', 'ID_producto');
+        return $this->belongsTo(Producto::class, 'ID_producto', 'ID_producto');
     }
 
     public function venta()

@@ -16,5 +16,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+Route::resource('productos', ProductoController::class);
+Route::resource('detalle_ingreso', DetalleIngresoController::class);
+Route::resource('clientes', ClienteController::class);
+Route::resource('categorias', CategoriaController::class);
+Route::resource('proveedores', ProveedorController::class);
+Route::resource('ingresos', IngresoController::class);
+Route::resource('ventas', VentaController::class);
+Route::resource('detalle_ventas', DetalleVentaController::class);
+Route::resource('users', USerController::class);
 require __DIR__.'/auth.php';
