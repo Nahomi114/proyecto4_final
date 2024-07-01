@@ -39,57 +39,72 @@ class VentaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'ID_clientes' => 'required|exists:clientes,ID_clientes',
-            'user_id' => 'required|exists:users,id',
-            'fecha_venta' => 'required|date',
-            'productos' => 'required|array',
-            'productos.*' => 'exists:productos,ID_producto',
-            'cantidades' => 'required|array',
-            'cantidades.*' => 'integer|min:1',
-            'descuentos' => 'required|array',
-            'descuentos.*' => 'numeric|min:0',
-            'total' => 'required|numeric',
-            'Estado' => 'required',
-        ]);
-
         try {
-            DB::transaction(function () use ($request) {
-                $venta = Venta::create([
-                    'ID_clientes' => $request->ID_clientes,
-                    'user_id' => $request->user_id,
-                    'fecha_venta' => $request->fecha_venta,
-                    'total' => $request->total,
-                    'Estado' => $request->Estado,
+            // Validar los datos recibidos
+            $request->validate([
+                'ID_clientes' => 'required|exists:clientes,ID_clientes',
+                'user_id' => 'required|exists:users,id',
+                'fecha_venta' => 'required|date',
+                'productos' => 'required|array',
+                'productos.*' => 'exists:productos,ID_producto',
+                'cantidades' => 'required|array',
+                'cantidades.*' => 'integer|min:1',
+                'descuentos' => 'required|array',
+                'descuentos.*' => 'numeric|min:0',
+                'total' => 'required|numeric',
+                'Estado' => 'required',
+            ]);
+    
+            // Iniciar la transacción
+            DB::beginTransaction();
+    
+            // Crear la venta principal
+            $venta = Venta::create([
+                'ID_clientes' => $request->ID_clientes,
+                'user_id' => $request->user_id,
+                'fecha_venta' => $request->fecha_venta,
+                'total' => $request->total,
+                'Estado' => $request->Estado,
+            ]);
+    
+            $total = 0;
+    
+            // Crear los detalles de venta
+            foreach ($request->productos as $index => $ID_producto) {
+                $producto = Producto::find($ID_producto);
+                $cantidad = $request->cantidades[$index];
+                $descuento = $request->descuentos[$index];
+                $precio = $producto->Precio_producto;
+                $subtotal = ($cantidad * $precio) - $descuento;
+    
+                DetalleVenta::create([
+                    'ID_producto' => $ID_producto,
+                    'ID_ventas' => $venta->ID_ventas,
+                    'cantidad' => $cantidad,
+                    'precio' => $precio,
+                    'descuento' => $descuento,
+                    'subtotal' => $subtotal,
                 ]);
-
-                $total = 0;
-
-                foreach ($request->productos as $index => $ID_producto) {
-                    $producto = Producto::find($ID_producto);
-                    $cantidad = $request->cantidades[$index];
-                    $descuento = $request->descuentos[$index];
-                    $precio = $producto->Precio_producto;
-                    $subtotal = ($cantidad * $precio) - $descuento;
-
-                    DetalleVenta::create([
-                        'ID_producto' => $ID_producto,
-                        'ID_ventas' => $venta->ID_ventas,
-                        'cantidad' => $cantidad,
-                        'precio' => $precio,
-                        'descuento' => $descuento,
-                        'subtotal' => $subtotal,
-                    ]);
-
-                    $total += $subtotal;
-                }
-
-                $venta->update(['total' => $total]);
-            });
-
+    
+                $total += $subtotal;
+            }
+    
+            // Actualizar el total de la venta
+            $venta->update(['total' => $total]);
+    
+            // Commit de la transacción
+            DB::commit();
+    
             return redirect()->route('ventas.index')->with('success', 'Venta creada correctamente.');
+    
         } catch (\Exception $e) {
+            // Rollback de la transacción en caso de error
+            DB::rollback();
+    
+            // Registrar el error
             \Log::error('Error al intentar guardar la venta: ' . $e->getMessage());
+    
+            // Redirigir de nuevo al formulario de creación con mensaje de error
             return redirect()->route('ventas.create')->with('error', 'Ocurrió un error al intentar guardar la venta. Por favor, contacta al soporte técnico.');
         }
     }
