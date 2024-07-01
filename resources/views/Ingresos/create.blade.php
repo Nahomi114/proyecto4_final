@@ -1,70 +1,72 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Crear Ingreso</h1>
-    <form action="{{ route('ingresos.store') }}" method="POST" id="ingresoForm">
+<div class="container mx-auto px-4">
+    <h1 class="text-2xl font-semibold mb-4">Crear Ingreso</h1>
+    <form action="{{ route('ingresos.store') }}" method="POST" id="ingresoForm" class="bg-white p-6 rounded-lg shadow-md">
         @csrf
-        <div class="form-group">
-            <label for="ID_proveedores">Proveedor:</label>
-            <select name="ID_proveedores" id="ID_proveedores" class="form-control">
+        <div class="mb-4">
+            <label for="ID_proveedores" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Proveedor:</label>
+            <select name="ID_proveedores" id="ID_proveedores" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 @foreach($proveedores as $proveedor)
                     <option value="{{ $proveedor->ID_proveedores }}">{{ $proveedor->Nom_proveedores }}</option>
                 @endforeach
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="user_id">Usuario:</label>
-            <select name="user_id" id="user_id" class="form-control">
+        <div class="mb-4">
+            <label for="user_id" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Usuario:</label>
+            <select name="user_id" id="user_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 @foreach($users as $user)
                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                 @endforeach
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="serie_comprob">Serie del Comprobante:</label>
-            <input type="text" name="serie_comprob" id="serie_comprob" class="form-control">
+        <div class="mb-4">
+            <label for="serie_comprob" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Serie del Comprobante:</label>
+            <input type="text" name="serie_comprob" id="serie_comprob" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
 
-        <div class="form-group">
-            <label for="fec_ingreso">Fecha de Ingreso:</label>
-            <input type="date" name="fec_ingreso" id="fec_ingreso" class="form-control">
+        <div class="mb-4">
+            <label for="fec_ingreso" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Fecha de Ingreso:</label>
+            <input type="date" name="fec_ingreso" id="fec_ingreso" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
 
-        <h3>Detalles del Ingreso</h3>
-        <table class="table" id="detallesTable">
+        <h3 class="text-lg font-semibold mb-2">Detalles del Ingreso</h3>
+        <table class="min-w-full divide-y divide-gray-200 mb-4">
             <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Subtotal</th>
-                    <th>Acción</th>
+                <tr class="bg-gray-50">
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subtotal</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acción</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody id="detallesTable" class="bg-white divide-y divide-gray-200">
+                <!-- Detalles de ingreso serán agregados dinámicamente aquí -->
+            </tbody>
         </table>
-        <button type="button" id="addDetalle" class="btn btn-primary">Agregar Detalle</button>
+        <button type="button" id="addDetalle" class="bg-blue-900 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4">Agregar Detalle</button>
 
-        <div class="form-group">
-            <label for="impuesto">Impuesto:</label>
-            <input type="text" name="impuesto" id="impuesto" class="form-control" value="0.18" readonly>
+        <div class="mb-4">
+            <label for="impuesto" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Impuesto:</label>
+            <input type="text" name="impuesto" id="impuesto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" value="0.18" readonly>
         </div>
 
-        <div class="form-group">
-            <label for="total">Total:</label>
-            <input type="text" name="total" id="total" class="form-control" readonly>
+        <div class="mb-4">
+            <label for="total" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Total:</label>
+            <input type="text" name="total" id="total" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" readonly>
         </div>
 
-        <button type="submit" class="btn btn-success">Guardar Ingreso</button>
+        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Guardar Ingreso</button>
     </form>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    let detallesTable = document.querySelector('#detallesTable tbody');
+    let detallesTable = document.querySelector('#detallesTable');
     let addDetalleButton = document.querySelector('#addDetalle');
     let totalInput = document.querySelector('#total');
     let impuestoInput = document.querySelector('#impuesto');
@@ -75,21 +77,21 @@ document.addEventListener('DOMContentLoaded', function () {
         newRow.innerHTML = `
             <tr>
                 <td>
-                    <select name="detalles[${detalleCount}][ID_producto]" class="form-control">
+                    <select name="detalles[${detalleCount}][ID_producto]" class="form-control block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         @foreach($productos as $producto)
                             <option value="{{ $producto->ID_producto }}">{{ $producto->Nom_producto }}</option>
                         @endforeach
                     </select>
                 </td>
                 <td>
-                    <input type="number" name="detalles[${detalleCount}][cant_det_ingreso]" class="form-control" min="1" step="1" required>
+                    <input type="number" name="detalles[${detalleCount}][cant_det_ingreso]" class="form-control block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" min="1" step="1" required>
                 </td>
                 <td>
-                    <input type="number" name="detalles[${detalleCount}][precio_det_ingreso]" class="form-control" min="0" step="0.01" required>
+                    <input type="number" name="detalles[${detalleCount}][precio_det_ingreso]" class="form-control block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" min="0" step="0.01" required>
                 </td>
-                <td class="subtotal">0.00</td>
+                <td class="px-4 py-2">0.00</td>
                 <td>
-                    <button type="button" class="btn btn-danger removeDetalle">Eliminar</button>
+                    <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Eliminar</button>
                 </td>
             </tr>
         `;
@@ -99,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     detallesTable.addEventListener('input', updateSubtotals);
     detallesTable.addEventListener('click', function (event) {
-        if (event.target.classList.contains('removeDetalle')) {
+        if (event.target.classList.contains('bg-red-500')) {
             event.target.closest('tr').remove();
             updateSubtotals();
         }
@@ -111,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let cantidad = row.querySelector('input[name$="[cant_det_ingreso]"]').value;
             let precio = row.querySelector('input[name$="[precio_det_ingreso]"]').value;
             let subtotal = parseFloat(cantidad) * parseFloat(precio);
-            row.querySelector('.subtotal').textContent = subtotal.toFixed(2);
+            row.querySelector('.px-4.py-2').textContent = subtotal.toFixed(2);
             total += subtotal;
         });
         let impuesto = total * parseFloat(impuestoInput.value);
