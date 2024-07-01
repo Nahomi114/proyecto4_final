@@ -13,9 +13,9 @@
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
                 <div class="card-header text-center" style="font-size: 2rem; font-weight: bold;">Listado de Ventas</div>
-                <a href="{{ route('ventas.create') }}" class="btn btn-primary mb-3">Crear Nueva Venta</a>
+                <a href="{{ route('ventas.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">Crear Nueva Venta</a>
 
-                <div class="overflow-x-auto">
+                <div class="card-body">
                     <table class="w-full table-auto min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -48,11 +48,11 @@
                                         </form>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ route('ventas.edit', $venta) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
+                                        <a href="{{ route('ventas.edit', $venta) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Editar</a>
                                         <form action="{{ route('ventas.destroy', $venta) }}" method="POST" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('¿Está seguro de eliminar esta venta?')">Eliminar</button>
+                                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" onclick="return confirm('¿Está seguro de eliminar esta venta?')">Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>
