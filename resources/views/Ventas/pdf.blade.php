@@ -1,22 +1,34 @@
-@extends('layouts.app')
+<!-- resources/views/categorias/pdf.blade.php -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
 
-@section('content')
-    @if (isset($header))
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header>
-    @endif
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
 
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-            <div class="p-6 bg-white border-b border-gray-200">
-                <div class="card-header text-center" style="font-size: 2rem; font-weight: bold;">Listado de Ventas</div>
-                <a href="{{ route('ventas.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">Crear Nueva Venta</a>
-                <a href="{{ route('ventas.pdf') }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md text-sm">PDF</a>
-                <div class="card-body">
-                    <table class="w-full table-auto min-w-full divide-y divide-gray-200">
+    <style>
+        .cabecera{
+            background-color: black;
+            color: white;
+        }
+    </style>    
+    </head>
+
+    <body>
+        <h1 class= "text-center">Lista de Ventas</h1>
+        <table class="w-full table-auto min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <th class="px-6 py-3">ID Venta</th>
@@ -25,7 +37,6 @@
                                 <th class="px-6 py-3">Fecha de Venta</th>
                                 <th class="px-6 py-3">Total</th>
                                 <th class="px-6 py-3">Estado</th>
-                                <th class="px-6 py-3">Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -47,25 +58,22 @@
                                             </button>
                                         </form>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ route('ventas.edit', $venta) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Editar</a>
-                                        <form action="{{ route('ventas.destroy', $venta) }}" method="POST" style="display: inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" onclick="return confirm('¿Está seguro de eliminar esta venta?')">Eliminar</button>
-                                        </form>
-                                    </td>
+
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+        <!-- Bootstrap JavaScript Libraries -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
 
-                <!-- Paginación -->
-                <div class="mt-4">
-                    {{ $ventas->links() }}
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

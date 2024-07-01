@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
@@ -15,7 +16,11 @@ class UserController extends Controller
         $users = User::paginate(10);
         return view('users.index', compact('users'));
     }
-
+    public function pdf(){
+        $users=User::all();
+        $pdf = Pdf::loadView('users.pdf', compact('users'));
+        return $pdf->download('Reportes de Usuarios.pdf');
+    }
     public function create()
     {
         return view('users.create');

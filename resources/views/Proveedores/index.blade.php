@@ -10,6 +10,7 @@
 
                         <div class="p-6">
                             <a href="{{ route('proveedores.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">Agregar Proveedor</a>
+                            <a href="{{ route('proveedores.pdf') }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md text-sm">PDF</a>
                         </div>
 
                         <div class="card-body">

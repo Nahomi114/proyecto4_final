@@ -25,6 +25,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::get('/categorias/pdf', [CategoriaController::class, 'pdf'])->name('categorias.pdf');
+Route::get('/productos/pdf', [ProductoController::class, 'pdf'])->name('productos.pdf');
+Route::get('/clientes/pdf', [ClienteController::class, 'pdf'])->name('clientes.pdf');
+Route::get('/proveedores/pdf', [ProveedorController::class, 'pdf'])->name('proveedores.pdf');
+Route::get('/ingresos/pdf', [IngresoController::class, 'pdf'])->name('ingresos.pdf');
+Route::get('/ventas/pdf', [VentaController::class, 'pdf'])->name('ventas.pdf');
+Route::get('/users/pdf', [UserController::class, 'pdf'])->name('users.pdf');
 Route::resource('productos', ProductoController::class);
 Route::resource('detalle_ingreso', DetalleIngresoController::class);
 Route::resource('clientes', ClienteController::class);

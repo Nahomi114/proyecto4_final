@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use BadMethodCallException;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProveedorController extends Controller
 {
@@ -15,7 +16,11 @@ class ProveedorController extends Controller
         $proveedores = Proveedor::paginate(10);
         return view('proveedores.index', compact('proveedores'));
     }
-
+    public function pdf(){
+        $proveedores=Proveedor::all();
+        $pdf = Pdf::loadView('proveedores.pdf', compact('proveedores'));
+        return $pdf->download('Reporte de Proveedores.pdf');
+    }
     public function create() {
         return view('proveedores.create');
     }

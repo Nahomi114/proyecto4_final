@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use BadMethodCallException;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VentaController extends Controller
 {
@@ -19,7 +20,11 @@ class VentaController extends Controller
         $ventas = Venta::with('cliente', 'usuario')->paginate(20);
         return view('ventas.index', compact('ventas'));
     }
-
+    public function pdf(){
+        $ventas=Venta::all();
+        $pdf = Pdf::loadView('ventas.pdf', compact('ventas'));
+        return $pdf->download('Reporte de Ventas.pdf');
+    }
     public function create()
     {
         $clientes = Cliente::all();

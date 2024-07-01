@@ -8,22 +8,23 @@
                     <div class="card-header text-center" style="font-size: 2rem; font-weight: bold;">Listado de Clientes</div>
                     <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
-                            <a href="{{ route('clientes.create') }}" class="btn btn-primary btn-sm float-right">Nuevo Cliente</a>
+                            <a href="{{ route('clientes.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md mr-2 text-sm">Nuevo Cliente</a>
+                            <a href="{{ route('clientes.pdf') }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md text-sm">PDF</a>
                         </div>
 
                         <div class="card-body">
                             <div class="bg-background text-card-foreground rounded-lg shadow-lg">
-                                <table class="w-full table-auto">
-                                    <thead>
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
                                         <tr class="bg-primary text-primary-foreground font-medium">
-                                            <th class="px-4 py-3 rounded-tl-lg">ID</th>
-                                            <th class="px-4 py-3">Nombre</th>
-                                            <th class="px-4 py-3">Apellido</th>
-                                            <th class="px-4 py-3">Tipo Documento</th>
-                                            <th class="px-4 py-3">Número de Documento</th>
-                                            <th class="px-4 py-3">Celular</th>
-                                            <th class="px-4 py-3">Correo Electrónico</th>
-                                            <th class="px-4 py-3 rounded-tr-lg">Acciones</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Apellido</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo Documento</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Número de Documento</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Celular</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correo Electrónico</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>

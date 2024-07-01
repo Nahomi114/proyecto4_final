@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Producto;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use BadMethodCallException;
 
@@ -18,7 +19,11 @@ class IngresoController extends Controller
         $ingresos = Ingreso::with('proveedor', 'user')->paginate(20);
         return view('ingresos.index', compact('ingresos'));
     }
-
+    public function pdf(){
+        $ingresos=Ingreso::all();
+        $pdf = Pdf::loadView('ingresos.pdf', compact('ingresos'));
+        return $pdf->download('Reporte de Ingresos.pdf');
+    }
     public function create()    
     {
     $proveedores = Proveedor::all();

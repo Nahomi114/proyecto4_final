@@ -8,12 +8,18 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use BadMethodCallException;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ClienteController extends Controller
 {
     public function index() {
         $clientes = Cliente::paginate(20);
         return view('clientes.index', compact('clientes'));
+    }
+    public function pdf(){
+        $clientes=Cliente::all();
+        $pdf = Pdf::loadView('clientes.pdf', compact('clientes'));
+        return $pdf->download('Reporte de Clientes.pdf');
     }
 
     public function create() {

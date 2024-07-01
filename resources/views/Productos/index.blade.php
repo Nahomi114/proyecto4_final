@@ -11,8 +11,8 @@
 
     <div class="card-body">
     <div class="p-6 bg-white border-b border-gray-200">
-        <a href="{{ route('productos.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">Crear Nuevo Producto</a>
-        </div>
+        <a href="{{ route('productos.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">Crear Nuevo Producto</a>   
+    </div>
         <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
             @foreach ($productos as $producto)
                 <div class="relative overflow-hidden rounded-lg shadow-lg group hover:shadow-xl hover:-translate-y-2">
@@ -37,8 +37,6 @@
         </section>
 
         <!-- Pagination -->
-        <div class="mt-4">
-            {{ $productos->links() }}
-        </div>
+
     </div>
 @endsection

@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use BadMethodCallException;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProductoController extends Controller
 {
@@ -16,7 +17,11 @@ class ProductoController extends Controller
         $productos = Producto::paginate(10);
         return view('productos.index', compact('productos'));
     }
-
+    public function pdf(){
+        $productos=Producto::all();
+        $pdf = Pdf::loadView('productos.pdf', compact('productos'));
+        return $pdf->download('Reporte de Productos.pdf');
+    }
     public function create() {
         $categorias = Categoria::all();
         return view('productos.create', compact('categorias'));
