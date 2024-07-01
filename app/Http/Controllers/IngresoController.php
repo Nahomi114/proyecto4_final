@@ -16,7 +16,7 @@ use BadMethodCallException;
 class IngresoController extends Controller
 {
     public function index() {
-        $ingresos = Ingreso::with('proveedor', 'user')->paginate(20);
+        $ingresos = Ingreso::with('proveedor', 'user')->paginate(10);
         return view('ingresos.index', compact('ingresos'));
     }
     public function pdf(){

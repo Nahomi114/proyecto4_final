@@ -11,6 +11,10 @@ use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DetalleVentaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoriaSearchController;
+use App\Http\Controllers\ProductoSearchController;
+use App\Http\Controllers\ProveedorSearchController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -40,5 +44,7 @@ Route::resource('ingresos', IngresoController::class);
 Route::resource('ventas', VentaController::class);
 Route::resource('detalle_ventas', DetalleVentaController::class);
 Route::resource('users', UserController::class);
-
+Route::get('/search-producto', [ProductoSearchController::class, 'search'])->name('productos.search');
+Route::get('/search-categoria', [CategoriaSearchController::class, 'search'])->name('categorias.search');
+Route::get('/proveedores/search', [ProveedorSearchController::class, 'search'])->name('proveedores.search');
 require __DIR__.'/auth.php';

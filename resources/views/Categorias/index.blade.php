@@ -12,12 +12,25 @@
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
-                <div class="card-header text-center text-2xl font-bold">Listado de Categorias</div>
+                <div class="card-header text-center text-2xl font-bold">Listado de Categorías</div>
                 <div class="flex justify-end">
-                    <a href="{{ route('categorias.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md mr-2 text-sm">Nueva Categoria</a>
+                    <a href="{{ route('categorias.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md mr-2 text-sm">Nueva Categoría</a>
                     <a href="{{ route('categorias.pdf') }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md text-sm">PDF</a>
                 </div>
             </div>
+            <form action="{{ route('categorias.search') }}" method="GET" class="p-6 bg-white border-b border-gray-200">
+                <input type="text" name="search_key" placeholder="Buscar por nombre de categoría" class="px-4 py-2 border border-gray-300 rounded-md">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md ml-2">Buscar</button>
+            </form>
+            
+            @if (session('result'))
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <h2>Resultados de la búsqueda:</h2>
+                    <p>{{ session('result')->Nom_categorias }}</p>
+                    <p>{{ session('result')->Desc_categorias }}</p>
+                </div>
+            @endif
+
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>

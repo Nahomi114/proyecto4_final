@@ -14,7 +14,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class ProductoController extends Controller
 {
     public function index() {
-        $productos = Producto::paginate(10);
+        $productos = Producto::paginate(6);
         return view('productos.index', compact('productos'));
     }
     public function pdf(){
@@ -26,6 +26,12 @@ class ProductoController extends Controller
         $categorias = Categoria::all();
         return view('productos.create', compact('categorias'));
     }
+    public function show($id)
+{
+    $proveedor = Proveedor::findOrFail($id); 
+    return view('proveedores.show', compact('proveedor'));
+}
+
     
     public function store(Request $request) {
         $request->validate([
