@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('cantidad');
             $table->double('precio');
             $table->double('descuento')->default(0);
-            $table->double('subtotal');
+            $table->double('subtotal')->default(0.0);
             $table->timestamps();
 
             $table->foreign('ID_producto')->references('ID_producto')->on('productos')->onDelete('cascade');

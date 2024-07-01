@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ID_clientes');
             $table->unsignedBigInteger('user_id'); 
             $table->dateTime('fecha_venta');
-            $table->double('impuesto_venta');
+           
             $table->double('total');
             $table->string('Estado');
             $table->timestamps();

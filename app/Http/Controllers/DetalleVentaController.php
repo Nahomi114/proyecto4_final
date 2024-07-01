@@ -49,7 +49,7 @@ class VentaController extends Controller
                 'ID_clientes' => $request->ID_clientes,
                 'user_id' => $request->user_id,
                 'fecha_venta' => $request->fecha_venta,
-                'impuesto_venta' => 0.18,
+                
                 'total' => 0,
                 'Estado' => 'Pendiente',
             ]);
