@@ -14,9 +14,7 @@ class Ingreso extends Model
     protected $fillable = [
         'ID_proveedores',
         'user_id',
-        'tipo_comprob',
         'serie_comprob',
-        'num_comprob',
         'fec_ingreso',
         'impuesto',
         'total',
@@ -31,6 +29,12 @@ class Ingreso extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function detalles()
+    {
+        return $this->hasMany(DetalleIngreso::class, 'ID_ingreso', 'ID_ingreso');
+    }
+
     protected $casts = [
         'fec_ingreso' => 'datetime',
     ];

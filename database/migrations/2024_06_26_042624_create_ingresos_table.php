@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id('ID_ingreso');
             $table->unsignedBigInteger('ID_proveedores');
             $table->unsignedBigInteger('user_id'); // Referencia a la tabla users
-            $table->string('tipo_comprob');
+
             $table->string('serie_comprob');
-            $table->string('num_comprob');
+
             $table->dateTime('fec_ingreso');
             $table->double('impuesto');
             $table->double('total');

@@ -2,26 +2,27 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Ingreso;
-use App\Models\Proveedor;
-use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class IngresoFactory extends Factory
 {
     protected $model = Ingreso::class;
 
-    public function definition(): array
+    public function definition()
     {
+        // Obtener IDs válidos de proveedores y usuarios
+        $proveedorId = \App\Models\Proveedor::inRandomOrder()->first()->ID_proveedores;
+        $userId = \App\Models\User::inRandomOrder()->first()->id;
+
         return [
-            'ID_proveedores' => Proveedor::factory(),
-            'user_id' => User::factory(),
-            'tipo_comprob' => $this->faker->randomElement(['Factura', 'Boleta']),
+            'ID_proveedores' => $proveedorId,
+            'user_id' => $userId,
             'serie_comprob' => $this->faker->bothify('??###'),
-            'num_comprob' => $this->faker->unique()->numerify('##########'),
-            'fec_ingreso' => $this->faker->dateTime,
+            'fec_ingreso' => $this->faker->date(),
             'impuesto' => $this->faker->randomFloat(2, 0, 100),
             'total' => $this->faker->randomFloat(2, 100, 1000),
         ];
     }
 }
+

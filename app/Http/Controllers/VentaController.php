@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Venta;
+use App\Models\Cliente;
+use App\Models\Producto;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -24,7 +27,11 @@ class VentaController extends Controller
 
     public function create()
     {
-        return view('ventas.create');
+        $clientes = Cliente::all();
+        $productos = Producto::all();
+        $users = User::all();
+
+        return view('ventas.create', compact('clientes', 'productos', 'users'));
     }
 
     public function store(Request $request)
@@ -32,14 +39,15 @@ class VentaController extends Controller
         $request->validate([
             'ID_clientes' => 'required|exists:clientes,ID_clientes',
             'user_id' => 'required|exists:users,id',
-            'tipo_comprobante' => 'required',
-            'serie_comprobante' => 'required',
-            'num_comprobante' => 'required',
             'fecha_venta' => 'required|date',
-            'impuesto_venta' => 'required|numeric',
+            
             'total' => 'required|numeric',
             'Estado' => 'required',
         ]);
+
+        // Calcular el total y otros campos antes de crear la venta
+        $total = $request->total;
+        // Realizar cualquier cálculo necesario aquí
 
         Venta::create($request->all());
         return redirect()->route('ventas.index');
@@ -55,11 +63,8 @@ class VentaController extends Controller
         $request->validate([
             'ID_clientes' => 'required|exists:clientes,ID_clientes',
             'user_id' => 'required|exists:users,id',
-            'tipo_comprobante' => 'required',
-            'serie_comprobante' => 'required',
-            'num_comprobante' => 'required',
             'fecha_venta' => 'required|date',
-            'impuesto_venta' => 'required|numeric',
+            
             'total' => 'required|numeric',
             'Estado' => 'required',
         ]);
@@ -89,5 +94,4 @@ class VentaController extends Controller
             return redirect()->route('ventas.index')->with('error', 'Ocurrió un error al intentar eliminar la venta.');
         }
     }
-
 }

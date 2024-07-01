@@ -19,14 +19,15 @@ class IngresoController extends Controller
         return view('ingresos.index', compact('ingresos'));
     }
 
-    public function create()
+    public function create()    
     {
-        $ingresos = Ingreso::all();
-        $proveedores = Proveedor::all(['ID_proveedores', 'Nom_proveedores']);
-        $users = User::all(['id', 'name']); 
+    $proveedores = Proveedor::all();
+    $productos = Producto::all();
+    $users = User::all(); // Asegúrate de importar el modelo User
 
-        return view('ingresos.create', compact('proveedores', 'users','ingresos'));
+    return view('ingresos.create', compact('proveedores', 'productos', 'users'));
     }
+
     public function show($id)
     {
         $ingreso = Ingreso::findOrFail($id);
@@ -34,24 +35,37 @@ class IngresoController extends Controller
 
         return view('ingresos.show', compact('ingreso', 'productos'));
     }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'ID_proveedores' => 'required',
+            'user_id' => 'required',
+            'serie_comprob' => 'required',
+            'fec_ingreso' => 'required|date',
+            'detalles' => 'required|array',
+            'detalles.*.ID_producto' => 'required|exists:productos,ID_producto',
+            'detalles.*.cant_det_ingreso' => 'required|numeric|min:1',
+            'detalles.*.precio_det_ingreso' => 'required|numeric|min:0',
+        ]);
+    
+        $ingreso = Ingreso::create($request->only([
+            'ID_proveedores',
+            'user_id',
+            'serie_comprob',
+            'fec_ingreso',
+            'impuesto',
+            'total',
+        ]));
+    
+        foreach ($request->detalles as $detalle) {
+            $ingreso->detalles()->create($detalle);
+        }
+    
+        return redirect()->route('ingresos.index')->with('success', 'Ingreso creado con éxito.');
+    }
+    
 
     
-    public function store(Request $request) {
-        $request->validate([
-            'ID_proveedores' => 'required|exists:proveedores,ID_proveedores',
-            'user_id' => 'required|exists:users,id',
-            'tipo_comprob' => 'required|string|max:255',
-            'serie_comprob' => 'required|string|max:255',
-            'num_comprob' => 'required|string|max:255',
-            'fec_ingreso' => 'required|date',
-            'impuesto' => 'required|numeric',
-            'total' => 'required|numeric',
-        ]);
-
-        Ingreso::create($request->all());
-        return redirect()->route('ingresos.index');
-    }
-
     public function edit(Ingreso $ingreso) {
         return view('ingresos.edit', compact('ingreso'));
     }
@@ -60,9 +74,9 @@ class IngresoController extends Controller
         $request->validate([
             'ID_proveedores' => 'required|exists:proveedores,ID_proveedores',
             'user_id' => 'required|exists:users,id',
-            'tipo_comprob' => 'required|string|max:255',
+
             'serie_comprob' => 'required|string|max:255',
-            'num_comprob' => 'required|string|max:255',
+
             'fec_ingreso' => 'required|date',
             'impuesto' => 'required|numeric',
             'total' => 'required|numeric',

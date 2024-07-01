@@ -15,9 +15,6 @@ return new class extends Migration
             $table->id('ID_ventas');
             $table->unsignedBigInteger('ID_clientes');
             $table->unsignedBigInteger('user_id'); 
-            $table->string('tipo_comprobante');
-            $table->string('serie_comprobante');
-            $table->string('num_comprobante');
             $table->dateTime('fecha_venta');
             $table->double('impuesto_venta');
             $table->double('total');
