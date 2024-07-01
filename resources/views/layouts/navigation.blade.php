@@ -7,7 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 font-sans">
-    <div class="flex">
+
+    <div class="flex h-screen">
         <!-- Sidebar -->
         <aside class="w-64 bg-gray-800 text-white flex flex-col items-center py-4">
             <span class="relative flex h-20 w-20 mb-4">

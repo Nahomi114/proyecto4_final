@@ -19,7 +19,7 @@ class CategoriaController extends Controller
     public function pdf(){
         $categorias=Categoria::all();
         $pdf = Pdf::loadView('categorias.pdf', compact('categorias'));
-        return $pdf->stream();
+        return $pdf->download('reporte.pdf');
     }
     public function create() {
         return view('categorias.create');

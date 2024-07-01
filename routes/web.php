@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('/categorias/pdf', [CategoriaController::class, 'pdf'])->name('Categorias.pdf');
+Route::get('/categorias/pdf', [CategoriaController::class, 'pdf'])->name('categorias.pdf');
 Route::resource('productos', ProductoController::class);
 Route::resource('detalle_ingreso', DetalleIngresoController::class);
 Route::resource('clientes', ClienteController::class);
@@ -34,5 +34,5 @@ Route::resource('ingresos', IngresoController::class);
 Route::resource('ventas', VentaController::class);
 Route::resource('detalle_ventas', DetalleVentaController::class);
 Route::resource('users', UserController::class);
-Route::get('/categorias/pdf', [CategoriaController::class, 'pdf'])->name('Categorias.pdf');
+
 require __DIR__.'/auth.php';

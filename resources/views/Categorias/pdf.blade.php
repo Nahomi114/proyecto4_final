@@ -1,4 +1,5 @@
-<!doctype html>
+<!-- resources/views/categorias/pdf.blade.php -->
+ <!doctype html>
 <html lang="en">
     <head>
         <title>Title</title>
@@ -18,19 +19,22 @@
         />
 
     <style>
-
+        .cabecera{
+            background-color: black;
+            color: white;
+        }
     </style>    
     </head>
 
     <body>
-        <h1>Lista de Categorias</h1>
+        <h1 class= "text-center">Lista de Categorias</h1>
     <table class="table-auto min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+                    <thead class="cabecera">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                            <th >ID</th>
+                            <th >Nombre</th>
+                            <th >Descripción</th>
+
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
