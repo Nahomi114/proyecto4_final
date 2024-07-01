@@ -12,8 +12,11 @@
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
-                <a href="{{ route('categorias.create') }}" class="btn btn-primary mb-3">Crear Nueva Categoría</a>
-
+            <div class="card-header text-center" style="font-size: 2rem; font-weight: bold;">Listado de Categorias</div>
+                    <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                        <div class="p-6 bg-white border-b border-gray-200">
+                            <a href="{{ route('categorias.create') }}" class="btn btn-primary btn-sm float-right">Nueva Categoria</a>
+                        </div>
                 <table class="table-auto min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>

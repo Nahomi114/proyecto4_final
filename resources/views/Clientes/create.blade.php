@@ -1,64 +1,67 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Crear Cliente</div>
-
-                    <div class="card-body">
+    <div class="container mx-auto">
+        <div class="flex justify-center">
+            <div class="w-full max-w-md">
+                <div class="bg-white dark:bg-muted dark:text-muted-foreground shadow-md rounded-lg overflow-hidden">
+                    <div class="bg-blue-900 text-white px-6 py-4">
+                        <h2 class="text-2xl font-semibold">Crear Cliente</h2>
+                    </div>
+                    <div class="p-6">
                         <form action="{{ route('clientes.store') }}" method="POST">
                             @csrf
-                            <div class="form-group">
-                                <label for="Nom_cliente">Nombre</label>
-                                <input type="text" class="form-control @error('Nom_cliente') is-invalid @enderror" id="Nom_cliente" name="Nom_cliente" value="{{ old('Nom_cliente') }}" required>
+                            <div class="mb-4">
+                                <label for="Nom_cliente" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Nombre</label>
+                                <input type="text" id="Nom_cliente" name="Nom_cliente" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('Nom_cliente') border-red-500 @enderror" value="{{ old('Nom_cliente') }}" required>
                                 @error('Nom_cliente')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label for="Ape_cliente">Apellido</label>
-                                <input type="text" class="form-control @error('Ape_cliente') is-invalid @enderror" id="Ape_cliente" name="Ape_cliente" value="{{ old('Ape_cliente') }}" required>
+                            <div class="mb-4">
+                                <label for="Ape_cliente" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Apellido</label>
+                                <input type="text" id="Ape_cliente" name="Ape_cliente" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('Ape_cliente') border-red-500 @enderror" value="{{ old('Ape_cliente') }}" required>
                                 @error('Ape_cliente')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label for="Tipo_documento">Tipo Documento</label>
-                                <select class="form-control @error('Tipo_documento') is-invalid @enderror" id="Tipo_documento" name="Tipo_documento" required>
+                            <div class="mb-4">
+                                <label for="Tipo_documento" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Tipo Documento</label>
+                                <select id="Tipo_documento" name="Tipo_documento" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('Tipo_documento') border-red-500 @enderror" required>
                                     <option value="">Seleccionar tipo de documento</option>
                                     <option value="DNI" @if(old('Tipo_documento') == 'DNI') selected @endif>DNI</option>
                                     <option value="RUC" @if(old('Tipo_documento') == 'RUC') selected @endif>RUC</option>
                                     <option value="Pasaporte" @if(old('Tipo_documento') == 'Pasaporte') selected @endif>Pasaporte</option>
                                 </select>
                                 @error('Tipo_documento')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label for="DNI_cliente">Número de Documento </label>
-                                <input type="text" class="form-control @error('DNI_cliente') is-invalid @enderror" id="DNI_cliente" name="DNI_cliente" value="{{ old('DNI_cliente') }}" pattern="\d*" required>
+                            <div class="mb-4">
+                                <label for="DNI_cliente" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Número de Documento</label>
+                                <input type="text" id="DNI_cliente" name="DNI_cliente" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('DNI_cliente') border-red-500 @enderror" value="{{ old('DNI_cliente') }}" pattern="\d*" required>
                                 @error('DNI_cliente')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label for="Cel_cliente">Celular</label>
-                                <input type="text" class="form-control @error('Cel_cliente') is-invalid @enderror" id="Cel_cliente" name="Cel_cliente" value="{{ old('Cel_cliente') }}" pattern="\d*" maxlength="9" required>
+                            <div class="mb-4">
+                                <label for="Cel_cliente" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Celular</label>
+                                <input type="text" id="Cel_cliente" name="Cel_cliente" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('Cel_cliente') border-red-500 @enderror" value="{{ old('Cel_cliente') }}" pattern="\d*" maxlength="9" required>
                                 @error('Cel_cliente')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label for="Correo_cliente">Correo Electrónico</label>
-                                <input type="email" class="form-control @error('Correo_cliente') is-invalid @enderror" id="Correo_cliente" name="Correo_cliente" value="{{ old('Correo_cliente') }}" required>
+                            <div class="mb-4">
+                                <label for="Correo_cliente" class="block text-sm font-medium text-gray-700 dark:text-muted-foreground">Correo Electrónico</label>
+                                <input type="email" id="Correo_cliente" name="Correo_cliente" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('Correo_cliente') border-red-500 @enderror" value="{{ old('Correo_cliente') }}" required>
                                 @error('Correo_cliente')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                            <a href="{{ route('clientes.index') }}" class="btn btn-secondary">Cancelar</a>
+                            <div class="flex justify-end mt-6">
+                                <button type="submit" class="bg-blue-900 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Guardar</button>
+                                <a href="{{ route('clientes.index') }}" class="ml-4 bg-gray-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">Cancelar</a>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -66,5 +69,3 @@
         </div>
     </div>
 @endsection
-
-

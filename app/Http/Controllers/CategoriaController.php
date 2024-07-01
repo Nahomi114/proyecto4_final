@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use BadMethodCallException;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CategoriaController extends Controller
 {
@@ -15,7 +16,11 @@ class CategoriaController extends Controller
         $categorias = Categoria::paginate(10);
         return view('categorias.index', compact('categorias'));
     }
-
+    public function pdf(){
+        $categorias=Categoria::all();
+        $pdf = Pdf::loadView('categorias.pdf', compact('categorias'));
+        return $pdf->stream();
+    }
     public function create() {
         return view('categorias.create');
     }
